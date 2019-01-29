@@ -32,13 +32,30 @@
             }
         }
         var xhr = new createXHR();
-        xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',false);
-        xhr.send(null);//这次是一次同步请求
-        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-            console.log(xhr.responseText);
-        } else {
-            console.log("Request was unsuccessful " + xhr.status);
+        // xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',false);
+        // xhr.send(null);//这次是一次同步请求
+        // if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+        //     console.log(xhr.responseText);
+        // } else {
+        //     console.log("Request was unsuccessful " + xhr.status);
+        // }
+
+        // 异步请求,这里用DOM0级事件是考虑到兼容问题
+        xhr.onreadystatechange = function() {
+            console.log('onready',xhr.readyState)
+            // readyState状态：0-未初始化，1-启动，已经调用open，2-发动，已经调用send，
+            // 3-接收，已经接收到部分相应数据，4-完成，已经接收到全部相应数据
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.log("Request was unsuccessful:" + xhr.status);
+                }
+            }
         }
+        // 第三个参数，false表示同步，true表示异步
+        xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',true);
+        xhr.send(null);
     </script>
 </body>
 </html>
