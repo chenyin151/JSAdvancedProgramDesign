@@ -56,6 +56,8 @@
         // 第三个参数，false表示同步，true表示异步
         xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',true);
         xhr.send(null);
+        // 取消请求
+        xhr.abort();
     </script>
 </body>
 </html>
