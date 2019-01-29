@@ -45,9 +45,9 @@
             // readyState状态：0-未初始化，1-启动，已经调用open，2-发动，已经调用send，
             // 3-接收，已经接收到部分相应数据，4-完成，已经接收到全部相应数据
             if (xhr.readyState == 4) {
-                var myHeader = xhr.getResponseHeader('Content-Length');
-                var allHeader = xhr.getAllResponseHeaders();
-                console.log('获取请求头', allHeader);
+                // var myHeader = xhr.getResponseHeader('Content-Length');
+                // var allHeader = xhr.getAllResponseHeaders();
+                // console.log('获取请求头', allHeader);
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                     console.log(xhr.responseText);
                 } else {
@@ -55,13 +55,24 @@
                 }
             }
         }
+        // 查询字符串的每个参数名称和值都必须使用encodeURIComponent进行编码
+        function addURLParam(url, name, value) {
+            url += (url.indexOf("?") == -1 ? "?" : "&");
+            url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+            return url;
+        }
         // 第三个参数，false表示同步，true表示异步
-        xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',true);
-        xhr.setRequestHeader('MyHeader', 'MyValue');//设置请求头
+        // xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',true);
+        xhr.open('GET', "https://m.douban.com/rexxar/api/v2/niffler/columns/127?for_mobile=1",true);
+        var url = "example.php";
+        url = addURLParam(url, "name", "Nicholas");
+        url = addURLParam(url, "book", "Professional Javascript");
+        xhr.open("GET", url, false);
+        // xhr.setRequestHeader('MyHeader', 'MyValue');//设置请求头
+        // xhr.setRequestHeader('Access-Control-Allow-Origin', true);
         xhr.send(null);
         // 取消请求
         // xhr.abort();
-        
     </script>
 </body>
 </html>
