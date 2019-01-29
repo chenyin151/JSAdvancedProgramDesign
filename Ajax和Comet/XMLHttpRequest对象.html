@@ -11,7 +11,6 @@
         // 创建兼容性较好的XHR对象
         function createXHR(){
             console.log('createXHR');
-            debugger;
             if (typeof XMLHttpRequest != 'undefined') {
                 return new XMLHttpRequest();
             } else if (typeof ActiveXObject != 'undefined') {
@@ -46,6 +45,9 @@
             // readyState状态：0-未初始化，1-启动，已经调用open，2-发动，已经调用send，
             // 3-接收，已经接收到部分相应数据，4-完成，已经接收到全部相应数据
             if (xhr.readyState == 4) {
+                var myHeader = xhr.getResponseHeader('Content-Length');
+                var allHeader = xhr.getAllResponseHeaders();
+                console.log('获取请求头', allHeader);
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                     console.log(xhr.responseText);
                 } else {
@@ -55,9 +57,11 @@
         }
         // 第三个参数，false表示同步，true表示异步
         xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',true);
+        xhr.setRequestHeader('MyHeader', 'MyValue');//设置请求头
         xhr.send(null);
         // 取消请求
-        xhr.abort();
+        // xhr.abort();
+        
     </script>
 </body>
 </html>
