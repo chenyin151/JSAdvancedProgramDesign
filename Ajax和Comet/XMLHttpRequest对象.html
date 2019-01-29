@@ -8,7 +8,10 @@
 </head>
 <body>
     <script>
+        // 创建兼容性较好的XHR对象
         function createXHR(){
+            console.log('createXHR');
+            debugger;
             if (typeof XMLHttpRequest != 'undefined') {
                 return new XMLHttpRequest();
             } else if (typeof ActiveXObject != 'undefined') {
@@ -17,7 +20,7 @@
                     i, len;
                     for (i = 0,len=versions.length;i<len;i++){
                         try {
-                            new ActiveXObject(versions[i]);
+                            // new ActiveXObject(versions[i]);
                             arguments.callee.activeXString = versions[i];
                             break;
                         } catch(ex) {}
@@ -27,6 +30,14 @@
             } else {
                 throw new Error("No XHR object available");
             }
+        }
+        var xhr = new createXHR();
+        xhr.open('POST', 'http://api.no1im.com/base/online/banner/list',false);
+        xhr.send(null);//这次是一次同步请求
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+            console.log(xhr.responseText);
+        } else {
+            console.log("Request was unsuccessful " + xhr.status);
         }
     </script>
 </body>
