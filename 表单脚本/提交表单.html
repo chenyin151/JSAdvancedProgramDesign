@@ -28,6 +28,9 @@
             <li><input type="radio" name="color" value="yellow"></li>
         </ul>
     </form>
+    <form id="myForm2">
+        <input type="submit" value="确认购买" name='submit-btn'>
+    </form>
     
     <script>
        var EventUtil = {
@@ -54,11 +57,7 @@
                 return event ? event : window.event
            },
            getTarget : function(event) {
-               if (event.preventDefault) {
-                   event.preventDefault()
-               } else {
-                   event.returnValue = false;
-               }
+               return event.target || event.srcElement;
            },
            removeHandler : function(element, type, handler) {
                 if (element.removeEventListener) {
@@ -111,6 +110,16 @@
     myForm1.elements['color'][0].disabled=true;
     // 修改type属性
     myForm1.elements[3].type='checkbox';
+
+    var myForm2 = document.getElementById('myForm2');
+    EventUtil.addHandler(myForm2, 'submit', function() {
+        var event = EventUtil.getEvent(event);
+        var target = EventUtil.getTarget(event);
+        debugger;
+        var btn=target.elements['submit-btn'];
+        btn.disabled=true;
+        EventUtil.preventDefault(event);
+    })
    </script>
 </body>
 </html>
