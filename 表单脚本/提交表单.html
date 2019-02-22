@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提交表单</title>
+</head>
+<body>
+    <form method="POST" id="myForm">
+        <!-- 通用提交按钮 -->
+        <input type="submit" value="Submit Form" > 
+        <!-- 自定义提交按钮 -->
+        <button type="submit">Submit Form</button>
+        <!-- <input type="image" src="graphics.gif"> -->
+    </form>
+    
+    <script>
+       var EventUtil = {
+           addHandler : function(element, type, handler) {
+               console.log('addHandle', element)
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
+                } else if (element.attachEvent) {
+                    element.attachEvent('on' + type, handler);
+                } else {
+                    element['on' + type] = handler;
+                }
+           },
+        //    取消默认鼠标事件
+           preventDefault : function(event) {
+                if (event.preventDefault) {
+                    event.preventDefault();
+                } else {
+                    // 兼容IE浏览器的取消默认鼠标事件
+                    event.returnValue = false;
+                }
+           },
+           getEvent : function(event) {
+                return event ? event : window.event
+           },
+           getTarget : function(event) {
+               if (event.preventDefault) {
+                   event.preventDefault()
+               } else {
+                   event.returnValue = false;
+               }
+           },
+           removeHandler : function(element, type, handler) {
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                } else if (element.detachEvent) {
+                    element.detachEvent('on' + type, handler);
+                } else {
+                    element['on' + type] = null;
+                }
+           }, 
+           stopPropagation : function(event) {
+               if (event.stopPropagation) {
+                   event.stopPropagation();
+               } else {
+                   event.cancelBubble = true
+               }
+           }
+       }
+       var myForm = document.getElementById('myForm');
+       EventUtil.addHandler(myForm, "submit", function(event) {
+           console.log('submit');
+           event = EventUtil.getEvent(event);
+           EventUtil.preventDefault(event);
+       })
+    //    myForm.submit();
+   </script>
+</body>
+</html>
