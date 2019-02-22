@@ -13,11 +13,20 @@
         <!-- 自定义提交按钮 -->
         <button type="submit">Submit Form</button>
         <!-- <input type="image" src="graphics.gif"> -->
-        <input type="text">
+        <input type="text" id="textbox1">
         <!-- 通用重置按钮 -->
         <input type="reset" value="Reset Form">
         <button type="reset">重置表单</button>
         <button>重置表单</button>
+    </form>
+
+    <form method="POST" id="myForm1">
+        <ul>
+            <li><input type="radio" name="color" value="red"></li>
+            <li><input type="radio" name="color" value="green"></li>
+            <li><input type="radio" name="color" value="blue"></li>
+            <li><input type="radio" name="color" value="yellow"></li>
+        </ul>
     </form>
     
     <script>
@@ -85,6 +94,23 @@
         // 手动调用表单重置
         myForm.reset();
     })
+    // elements可以获取表单中的元素集合
+    console.log(myForm.elements['textbox1'])
+    // 获取表单中的元素的数量
+    console.log(myForm.elements.length);
+    // 获取表单中的第一个字段
+    console.log(myForm.elements[0]);
+    var myForm1 = document.getElementById('myForm1');
+    // 多个表单控件都在使用同一个name则返回一个NodeList
+    console.log('多个表单控件使用同样的name', myForm1.elements['color']);
+    var field = myForm.elements['textbox1'];
+    // 修改value属性
+    field.value='sss';
+    // 设置焦点
+    field.focus();
+    myForm1.elements['color'][0].disabled=true;
+    // 修改type属性
+    myForm1.elements[3].type='checkbox';
    </script>
 </body>
 </html>
