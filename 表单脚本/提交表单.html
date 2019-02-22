@@ -13,6 +13,11 @@
         <!-- 自定义提交按钮 -->
         <button type="submit">Submit Form</button>
         <!-- <input type="image" src="graphics.gif"> -->
+        <input type="text">
+        <!-- 通用重置按钮 -->
+        <input type="reset" value="Reset Form">
+        <button type="reset">重置表单</button>
+        <button>重置表单</button>
     </form>
     
     <script>
@@ -70,6 +75,16 @@
            EventUtil.preventDefault(event);
        })
     //    myForm.submit();
+    EventUtil.addHandler(myForm, 'reset', function(event) {
+        // 取消事件对象
+        event = EventUtil.getEvent(event);
+        // 阻止表单重置
+        // EventUtil.preventDefault(event);
+    })
+    EventUtil.addHandler(myForm, 'click', function(event) {
+        // 手动调用表单重置
+        myForm.reset();
+    })
    </script>
 </body>
 </html>
